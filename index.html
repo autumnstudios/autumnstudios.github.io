@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0px;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-family: 'Roboto', serif;
+  transition: background .2s ease-in;
+}
+
+li a:hover {
+  background-color: #4aff00;
+  color: black;
+  transition: background .2s ease-in;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 300px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #ffff;
+  color: black;
+  border-radius: 20px;
+  outline: black 15px;
+  outline-color: black;
+  outline-width: 15px;
+}
+
+.card-title {
+  font-size: 40px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.flip-card-back {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+h1 {
+  font-size: 20px;
+}
+
+.wrap {
+  display: flex;
+}
+
+.column {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+  width: 23%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+  margin: 0 auto;
+  padding-bottom: 15px
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+.card-link {
+  color: white;
+}
+
+h1,h2,h3,h4 {
+  font-family: Roboto, serif;
+}
+
+.section-title {
+  font-size: 60px;
+  text-align: center;
+  font-family: 'Roboto Slab', serif;
+}
+
+.footer-outer {
+  width: 100%;
+  height: 100px;
+  background-color: #B65FCF;
+}
+
+.footer-title {
+  font-size: 70px;
+  padding-top: 30px;
+  padding-left: 10px;
+  color: white;
+  font-family: 'Roboto Slab', serif;
+}
+
+.footer-paragraph {
+  font-size: 40px;
+  padding-left: 15px;
+  padding-top: 15px;
+  color: white;
+  text-align: center;
+  font-family: Roboto, serif;
+}
+
+
+
+
+
+.plantcell {
+  padding-right: 40%;
+  position: absolute;
+}
+
+.bacteriacell {
+  padding-right: 40%;
+  position: absolute;
+}
+
+#switch-title {
+  position: absolute;
+  padding-left: 820px;
+  font-family: 'Roboto', sans-serif, serif;
+  font-size: 40px;
+}
+
+#switch-para {
+  position: absolute;
+  padding-left: 800px;
+  font-family: 'Roboto Slab', sans-serif, serif;
+  font-size: 30px;
+}
+
+.overlay-wrap {
+  padding-top: 5%;
+  height: 600px;
+  width: 100%;
+  text-align: left;
+  position: static;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.switch-div {
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  
+}
+
+.switch-label {
+  display: inline-block;
+  padding-right: 30px;
+}
+
+.switch-label-2 {
+  display: inline-block;
+  padding-left: 30px
+}
+
+
+  </style>
+  
+  <title>Cellular</title>
+</head>
+<body>
+  <div class="navbar">
+    <ul>
+      <li><a class="active" href="#">Home</a></li>
+      <li><a href="#plant">Plant Cell</a></li>
+      <li><a href="#bacteria">Bacterial Cell</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="https://docs.google.com/document/d/1t-rU1aRy15Ct77h_8Z8tDAlqarVs5casUgT9bfho7WE/edit?usp=sharing" target="_blank">Sources</a></li>
+    </ul>
+  </div>
+
+  <div class="overlay-wrap hoverwrap">
+    <img class="plantcell" id="plant" src="assets/Science Cell Plant.png" alt="" width="600px" height="500px">
+    <img class="bacteriacell" id="bacteria" src="assets/Science Bacteria Cell.png" alt="" width="600px" height="500px">
+    <h6 id="switch-title">Placeholder</h6>
+    <p id="switch-para">Placeholder</p>
+  </div>
+
+  <div class="switch-div">
+    <h2 class="switch-label">Bacterial Cell</h2>
+    <label class="switch">
+      <input id="switch" type="checkbox">
+      <span class="slider round"></span>
+    </label>
+    <h2 class="switch-label-2">Plant Cell</h2>
+  </div>
+  
+  <p>&nbsp &nbsp</p>
+  <p>&nbsp &nbsp</p>
+  <p>&nbsp &nbsp</p>
+  <p>&nbsp &nbsp</p>
+
+  <img class="center" src="/Science Venn Diagram.png" alt="" width="800px" height="600px">
+
+
+  <script>
+    var check = document.getElementById("switch");
+    var plant = document.getElementById("plant");
+    var bacteria = document.getElementById("bacteria");
+    var title = document.getElementById("switch-para")
+    var para = document.getElementById("switch-title");
+
+    console.log(check.checked)
+    plant.style.opacity = 0;
+    bacteria.style.opacity = 100;
+    title.innerHTML = "Bacterial Cell"
+    para.innerHTML = "Bacterial cells are small, single-celled eukaryotic organisms that do not contain a nucleus."
+
+    check.addEventListener("click", function() {
+        if (check.checked == true) {
+            title.innerHTML = "Plant Cell"
+            para.innerHTML = "Plant cells are eukaryotic cells that contain a true nucleus, and certain organelles that perform spefified functions."
+            plant.style.opacity = 100;
+            bacteria.style.opacity = 0;
+        } else {
+            plant.style.opacity = 0;
+            bacteria.style.opacity = 100;
+            title.innerHTML = "Bacterial Cell"
+            para.innerHTML = "Bacterial cells are small, single-celled eukaryotic organisms that do not contain a nucleus."
+        }
+
+    })
+  </script>
+  
+  <!-- Plant Cell Orgenelles -->
+  <div id="plant"></div>
+  <p>&nbsp &nbsp</p>
+  <section>
+    <h1 class="section-title">Plant Cell Orgenelles & Functions</h1>
+    <div class="wrap">
+      <div class="row">
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                  <h1 class="card-title">Cell Wall</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Cell Wall</h1>
+                <h3>The cell wall is an extra layer of protection providing structural support from damage.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Cytoplasm</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Cytoplasm</h1>
+                <h3>A substance that fills the cell, allowing the cell to retain intensity and shape. It also allows movement of other organelles.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Vacuole</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Vacuole</h1>
+                <h4>Vacuoles are a gel-like sack storing waste, water, etc. They also help to support the cell by exerting pressure, called <a class="card-link" href="#">turgor pressure.</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Cell Membrane</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Cell Membrane</h1>
+                <h3>The Cell Membrane is a semipermeable membrane that allows and denies entry, and exit of packages.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="row">
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Chloroplast</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Chloroplast</h1>
+                <h3>Chloroplast is responsible for photosynthesis, allowing sunlight to enter the cell and be exported.</h3>
+                <h3>6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Smooth E.R.</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Smooth Endoplasmic Reticulum</h1>
+                <h3>The smooth endoplasmic reticulum is like a refinery, detoxifying organelles.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Rough E.R.</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Rough Endoplasmic Reticulum</h1>
+                <h3>The rough endoplasmic reticulum is a gel-like body containing ribosome moles, it manufactures and distributes several proteins.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Golgi Body</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Golgi Body</h1>
+                <h3>The Golgi Apparatus is like amazon, it packages and ships proteins & fats.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="row">
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Lysosomes</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Lysosomes</h1>
+                <h3>Lysosomes break down cellular waste into more simple compounds. Lysosomes also send these compounds to the cytoplasm as building materials.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Mitochondria</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Mitochondria</h1>
+                <h3>Mitochondria are the powerhouse of the cell, converting oxygen & nutrients into energy, more scientifically known as <a class="card-link" href="#">Adenosine 5'-triphosphate</a>, or ATP for short.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Nucleus</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Nucleus</h1>
+                <h3>The Nucleus stores Deoxyribonucleic Acid (DNA) and coordinates the cell's events.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Nucleolus</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Nucleolus</h1>
+                <h3>The nucleolus is responsible for facilitating ribosome biogenesis.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="row">
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Ribosomes</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Ribosomes</h1>
+                <h3>Ribosomes are proteins that are composed of 60% RNA, and 40% protein.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr>
+  <!-- Bacteria Cell Structure-->
+  <div id="bacteria"></div>
+  <p>&nbsp &nbsp</p>
+  <section>
+    <h1 class="section-title">Bacteria Cell Structure & Functions</h1>
+    <div class="wrap">
+      <div class="row">
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Cell Wall</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Cell Wall</h1>
+                <h3>The cell wall is an extra layer of protection providing structural support from damage.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Cell Membrane</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Cell Membrane</h1>
+                <h3>The Cell Membrane is a semipermeable membrane that allows and denies entry and exit of packages.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Ribosomes</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Ribosomes</h1>
+                <h3>Ribosomes are protein organelles that are composed of 60% RNA, and 40% protein.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Cytoplasm</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Cytoplasm</h1>
+                <h3>A substance that fills the cell, allowing the cell to retain intensity and shape. It also allows movement of other organelles.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="row">
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Pilli</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Pilli</h1>
+                <h3>Pilli is a string-like substance that allows the bacterial cell to stick to other surfaces.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Flagellum</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Flagellum</h1>
+                <h3>Flagellum is the cell's tail, it allows the cell to move around inside it's host.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Plasmids</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Plasmids</h1>
+                <h3>Plasmids are small, double-stranded circular or linear DNA strands that can exist outside the nucleoid.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Plasma Membrane</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Plasma Membrane</h1>
+                <h4>Another wall that encloses the cytoplasm composed mainly of water, and also contains enzymes. Without this membrane, the entire contents of the cell would spill out. No Membrane, No Cell</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="row">
+        <div class="column">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Nucleoid</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Nucleoid</h1>
+                <h3>The nucleoid is a region that holds chromosomes.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="flip-card" style="padding-left: 115px;">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 class="card-title">Capsule</h1>
+              </div>
+              <div class="flip-card-back">
+                <h1>Capsule</h1>
+                <h3>The capsule is another layer of protection that surrounds the cell wall. It helps protect against phagocytosis and helps the bacterial cell adhere to surfaces.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- About Section -->
+  <div id="about"></div>
+  <p>&nbsp &nbsp</p>
+  <section>
+    <div class="footer-outer">
+      <h2 class="footer-paragraph">Made with ♥ by Jade Burke</h2>
+    </div>
+  </section>
+  
+</body>
+</html>
